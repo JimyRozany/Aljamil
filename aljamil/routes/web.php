@@ -1,7 +1,14 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\General\HomeController;
 use Illuminate\Support\Facades\Route;
+
+
+
+use Illuminate\Http\Request;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -21,9 +28,25 @@ use Illuminate\Support\Facades\Route;
 
 Route::get("/login", [AuthController::class, "getLogin"])->middleware("guest");
 Route::post("/login", [AuthController::class, "login"])->name("login");
-Route::get("/logout", [AuthController::class, "logout"])->name("logout");
 
 // protected
-Route::get("/pro", function () {
-    return "protected data";
-})->middleware("auth");
+Route::middleware("auth:admin")->group(function(){
+    Route::get("/logout", [AuthController::class, "logout"])->middleware("prevent.back")->name("logout");
+    
+    Route::get("/", [HomeController::class ,"home"])->name("home");
+    // Route::get("/companies", [HomeController::class ,"companies"])->name("companies");
+
+
+
+    // company resource routes
+    Route::resource('company', CompanyController::class);
+    Route::post('company/update', [CompanyController::class ,"update"]);
+
+    Route::get("bla" ,function () {
+        return response()->json("success" ,200) ;
+    });
+    Route::post("post-route" ,function (Request $req) {
+        // return response()->json("success" ,200) ;
+        return  $req ;
+    });
+});

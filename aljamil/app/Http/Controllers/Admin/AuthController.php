@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -22,12 +23,15 @@ class AuthController extends Controller
         $credentials = $request->only("email", "password");
         $success = auth("admin")->attempt($credentials);
 
-        return redirect("/pro");
+        return redirect("/");
     }
 
-    function logout()
+    public function logout()
     {
-        auth("admin")->logout();
-        return redirect("/login");
+        // $result =  auth("admin")->logout();
+          auth("admin")->logout();
+
+        // dd($result);
+        return redirect()->to('/');
     }
 }
