@@ -3,7 +3,7 @@
 @section('title', 'Companies')
 
 @section('content')
-    <div class="border border-green-500 flex flex-col relative">
+    <div class="flex flex-col relative">
         {{-- add new company  --}}
         <form action="{{ route('company.store') }}" method="POST" class="p-5 flex items-center gap-2">
             @csrf
@@ -34,8 +34,8 @@
         </form>
 
         {{-- display all companies if is exists --}}
-        @if ($companies)
-            <div class="border border-red-500 overflow-scroll h-auto mt-5 flex justify-center items-center flex-col">
+        @if (!$companies->isEmpty())
+            <div class=" overflow-scroll h-auto mt-5 flex justify-center items-center flex-col">
                 <div class="grid gap-5 grid-cols-2  md:grid-cols-3 lg:grid-cols-4">
                     @foreach ($companies as $company)
                         {{-- company card --}}
@@ -71,7 +71,7 @@
                     @endforeach
                 </div>
                 {{-- Pagination --}}
-                <div class="mt-2">
+                <div class="my-2">
                     {!! $companies->links() !!}
                 </div>
             </div>
