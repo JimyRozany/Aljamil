@@ -8,11 +8,14 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function home () {
+    public function home()
+    {
         $categories = Category::all();
-        return view("pages/home")->with("categories" ,$categories);
-    }                   
-    public function companies () {
-    return view('pages/companies');
+        return view("pages/home")->with("categories", $categories);
     }
+    public function companies()
+    {
+        return view('pages/companies');
+    }
+  
 }

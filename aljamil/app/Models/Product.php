@@ -17,5 +17,13 @@ class Product extends Model
         'company_id',
         'category_id'
     ];
-    
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'company_id');
+    }
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
+    }
 }
