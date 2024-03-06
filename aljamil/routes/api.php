@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\GeneralController;
+use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\General\HomeController;
 use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\User\CartController;
@@ -36,6 +37,12 @@ Route::middleware("jwt.verify")->group(function () {
 
     // resource cart 
     Route::apiResource('cart', CartController::class);
- 
-});
+    // get my favorites
+    Route::get("favorites", [FavoriteController::class, "index"]);
+    // add to favorites
+    Route::post("favorites", [FavoriteController::class, "store"]);
+    // delete from favorites
+    Route::delete("favorites/{id}", [FavoriteController::class, "destroy"]);
+    // ----end favorites routes ------
 
+});

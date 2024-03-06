@@ -16,10 +16,16 @@ class CartController extends Controller
     {
 
         $cart = auth("api-user")->user()->cart;
-        if ($cart !== null) {
-            return response()->json(["data" => [], "status" => "success", "message" => "cart is empty"]);
+        if (count($cart) > 0) {
+            return response()->json([
+                "data" => $cart,
+                "status" => "success"
+            ]);
         } else {
-            return response()->json(["data" => $cart, "status" => "success"]);
+            return response()->json([
+                "data" => [], "status" => "success",
+                "message" => "cart is empty"
+            ]);
         }
     }
 
