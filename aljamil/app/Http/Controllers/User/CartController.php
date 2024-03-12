@@ -15,10 +15,10 @@ class CartController extends Controller
     public function index()
     {
 
-        $cart = auth("api-user")->user()->cart;
-        if (count($cart) > 0) {
+        $carts = auth("api-user")->user()->carts;
+        if (count($carts) > 0) {
             return response()->json([
-                "data" => $cart,
+                "data" => $carts,
                 "status" => "success"
             ]);
         } else {
@@ -28,9 +28,18 @@ class CartController extends Controller
             ]);
         }
     }
-
+    // add to cart
     public function store(StoreCartRequest $request)
     {
+        $user_carts = auth('api-user')->user()->carts;
+
+        if ($user_carts->where("product_id", "=", $request->product_id)->first()) {
+            return response()->json([
+                "status" => "error",
+                "message" => "the product is already exists in your cart"
+            ], 403);
+        }
+
         $cart = Cart::create([
             "user_id" => auth("api-user")->user()->id,
             "product_id" => $request->product_id,

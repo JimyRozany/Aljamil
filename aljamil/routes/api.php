@@ -5,8 +5,7 @@ use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\General\HomeController;
 use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\User\CartController;
-use App\Models\Cart;
-use Illuminate\Http\Request;
+use App\Http\Controllers\User\OrderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -45,4 +44,12 @@ Route::middleware("jwt.verify")->group(function () {
     Route::delete("favorites/{id}", [FavoriteController::class, "destroy"]);
     // ----end favorites routes ------
 
+    // order
+
+    // get user order
+    Route::get("orders", [OrderController::class, "myOrders"]);
+    // make oreder
+    Route::post("order/create", [OrderController::class, "create"]);
+    // get order items
+    Route::get("order/items", [OrderController::class, "orderItems"]);
 });
